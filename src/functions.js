@@ -158,9 +158,9 @@ export function loopTimers(){
     // Long loop (game day) takes 5000ms without any modifiers.
     const baseLongTimer = webWorker.longRatio * webWorkerMainTimer;
     // The constant by which the time is accelerated when atrack.t > 0.
-    const timeAccelerationFactor = 2;
+    const timeAccelerationFactor = 5;
 
-    const aTimeMultiplier = atrack.t > 0 ? 1 / timeAccelerationFactor : 1;
+    const aTimeMultiplier = 1 / timeAccelerationFactor;
     return {
         webWorkerMainTimer,
         mainTimer: Math.ceil(webWorkerMainTimer * aTimeMultiplier),
