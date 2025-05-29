@@ -12767,6 +12767,7 @@ function longLoop(){
     // Checking if a substantial amount of time elapsed since last longLoop, indicating system suspension,
     // hibernation or something similar (the threshold is the same as for counting accelerated time during pause).
     let restartNeeded = false;
+    addATime(currentTimestamp);
     if (!global.settings.pause && exceededATimeThreshold(currentTimestamp)){
         // Adding accelerated time based on last current time which is updated below.
         addATime(currentTimestamp);
