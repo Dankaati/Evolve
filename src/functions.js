@@ -175,6 +175,7 @@ export function loopTimers(){
 export function addATime(currentTimestamp){
     // The second case is used for the initialization of atrack.t.
     global.settings.at = 11520;
+    atrack.t = global.settings.at;
 }
 
 // Takes the current Date.now, returns whether the minimum threshold to count accelerated time has passed.
