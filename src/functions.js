@@ -160,7 +160,7 @@ export function loopTimers(){
     // The constant by which the time is accelerated when atrack.t > 0.
     const timeAccelerationFactor = 5;
 
-    const aTimeMultiplier = 1 / timeAccelerationFactor;
+    const aTimeMultiplier = atrack.t > 0 ? 1 / timeAccelerationFactor : 1;
     return {
         webWorkerMainTimer,
         mainTimer: Math.ceil(webWorkerMainTimer * aTimeMultiplier),
@@ -174,28 +174,7 @@ export function loopTimers(){
 // time added. If the parameter is true, it will only add the time if a threshold of 120s has been reached.
 export function addATime(currentTimestamp){
     // The second case is used for the initialization of atrack.t.
-    if (exceededATimeThreshold(currentTimestamp) || global.stats.hasOwnProperty('current') && global.settings.at > 0){
-        let timeDiff = currentTimestamp - global.stats.current;
-        // Removing any accelerated time if the value is larger than the cap.
-        if (global.settings.at > 11520){
-            global.settings.at = 0;
-        }
-        // Accelerated time is added only if it is over the threshold.
-        if (timeDiff >= 120000){
-            const timers = loopTimers();
-            const gameDayDuration = timers.baseLongTimer;
-            // The number of days during which the time is accelerated (at) should take as long as 2 / 3 of paused time.
-            // at * gameDayDuration / timeAccelerationFactor = 2 / 3 * timeDiff
-            global.settings.at += Math.floor(2 / 3 * timeDiff * timers.timeAccelerationFactor / gameDayDuration);
-        }
-        // Accelerated time is capped at 8*60*60/2.5 game days.
-        if (global.settings.at > 11520){
-            global.settings.at = 11520;
-        }
-        atrack.t = global.settings.at;
-        // Updating the current date so that it won't be counted twice (e.g., when unpausing).
-        global.stats.current = currentTimestamp;
-    }
+    global.settings.at = 11520;
 }
 
 // Takes the current Date.now, returns whether the minimum threshold to count accelerated time has passed.
