@@ -791,7 +791,7 @@ export function checkAchievements(){
     unlockFeat('friday',global.race.universe === 'micro' ? true : false);
     unlockFeat('valentine',global.race.universe === 'micro' ? true : false);
     unlockFeat('leprechaun',global.race.universe === 'micro' ? true : false);
-    lockFeat('easter',global.race.universe === 'micro' ? true : false);
+    unlockFeat('easter',global.race.universe === 'micro' ? true : false);
     unlockFeat('egghunt',global.race.universe === 'micro' ? true : false);
     unlockFeat('launch_day',global.race.universe === 'micro' ? true : false);
     unlockFeat('trickortreat',global.race.universe === 'micro' ? true : false);
