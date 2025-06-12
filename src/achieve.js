@@ -788,67 +788,17 @@ export function checkAchievements(){
     let easter = eventActive('easter');
     let halloween = eventActive('halloween');
     let year = date.getFullYear();
-    if (!global.settings.boring && date.getDate() === 13 && date.getDay() === 5 && global.resource[global.race.species].amount >= 1){
-        let murder = false;
-        murder = unlockFeat('friday',global.race.universe === 'micro' ? true : false);
-        if (murder){
-            global.resource[global.race.species].amount--;
-        }
-    }
-    else if (!global.settings.boring && date.getMonth() === 1 && date.getDate() === 14){
-        unlockFeat('valentine',global.race.universe === 'micro' ? true : false);
-    }
-    else if (!global.settings.boring && date.getMonth() === 2 && date.getDate() === 17){
-        unlockFeat('leprechaun',global.race.universe === 'micro' ? true : false);
-    }
-    else if (easter.active){
-        unlockFeat('easter',global.race.universe === 'micro' ? true : false);
-
-        let eggs = 0;
-        for (let i=1; i<=18; i++){
-            if (global.special.egg[year][`egg${i}`]){
-                eggs++;
-            }
-        }
-
-        if (eggs >= 12){
-            unlockFeat('egghunt',global.race.universe === 'micro' ? true : false);
-        }
-    }
-    else if (eventActive('launch_day')){
-        unlockFeat('launch_day',global.race.universe === 'micro' ? true : false);
-    }
-    else if (halloween.active){
-        let total = 0;
-        for (let i=1; i<=7; i++){
-            if (global.special.trick[year][`trick${i}`]){
-                total++;
-            }
-        }
-        for (let i=1; i<=7; i++){
-            if (global.special.trick[year][`treat${i}`]){
-                total++;
-            }
-        }
-
-        if (total >= 12){
-            unlockFeat('trickortreat',global.race.universe === 'micro' ? true : false);
-        }
-
-        if (date.getMonth() === 9 && date.getDate() === 31){
-            unlockFeat('halloween',global.race.universe === 'micro' ? true : false);
-        }
-    }
-    else if (!global.settings.boring && date.getMonth() === 10 && date.getDate() >= 22 && date.getDate() <= 28){
-        unlockFeat('thanksgiving',global.race.universe === 'micro' ? true : false);
-    }
-    else if (!global.settings.boring && date.getMonth() === 11 && date.getDate() == 25){
-        unlockFeat('xmas',global.race.universe === 'micro' ? true : false);
-    }
-    
-    if (!global.settings.boring && date.getMonth() === 3 && date.getDate() >= 1 && date.getDate() <= 3 && global.stats.feat.hasOwnProperty('fool') && global.stats.feat.fool > 0){
-        unlockFeat('fool',global.race.universe === 'micro' ? true : false);
-    }
+    unlockFeat('friday',global.race.universe === 'micro' ? true : false);
+    unlockFeat('valentine',global.race.universe === 'micro' ? true : false);
+    unlockFeat('leprechaun',global.race.universe === 'micro' ? true : false);
+    lockFeat('easter',global.race.universe === 'micro' ? true : false);
+    unlockFeat('egghunt',global.race.universe === 'micro' ? true : false);
+    unlockFeat('launch_day',global.race.universe === 'micro' ? true : false);
+    unlockFeat('trickortreat',global.race.universe === 'micro' ? true : false);
+    unlockFeat('halloween',global.race.universe === 'micro' ? true : false);
+    unlockFeat('thanksgiving',global.race.universe === 'micro' ? true : false);
+    unlockFeat('xmas',global.race.universe === 'micro' ? true : false);
+    unlockFeat('fool',global.race.universe === 'micro' ? true : false);
 
     if (global.stats.dkills >= 666000000){
         unlockFeat('demon_slayer');
