@@ -12794,15 +12794,6 @@ function longLoop(){
         gameLoop('stop');
     }
 
-    if (atrack.t > 0){
-        atrack.t--;
-        global.settings.at--;
-        if (global.settings.at <= 0 || atrack.t <= 0){
-            global.settings.at = 0;
-            restartNeeded = true;
-        }
-    }
-
     if (restartNeeded){
         gameLoop('stop');
         gameLoop('start');
