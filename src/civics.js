@@ -2271,11 +2271,9 @@ export function armyRating(val,type,wound,analysis){
             army *= 0.8;
             data.push({ k: 'banana', v: -(20) });
         }
-        if (astrologySign() === 'aries'){
-            let astro = (astroVal('aries')[0] / 100);
-            army *= 1 + astro;
-            data.push({ k: 'sign_aries', v: astro });
-        }
+        let astro = (astroVal('aries')[0] / 100);
+        army *= 1 + astro;
+        data.push({ k: 'sign_aries', v: astro });
         let tacVal = govActive('tactician',0);
         if (tacVal){
             let tac = (tacVal / 100);
