@@ -760,9 +760,7 @@ function spyCost(i){
     if (global.race['infiltrator']){
         base /= 3;
     }
-    if (astrologySign() === 'scorpio'){
-        base *= 1 - (astroVal('scorpio')[0] / 100);
-    }
+    base *= 1 - (astroVal('scorpio')[0] / 100);
     return Math.round(base ** (global.civic.foreign[`gov${i}`].spy + 1)) + 500;
 }
 
