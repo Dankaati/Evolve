@@ -300,10 +300,7 @@ export function astroVal(sign){
     let boosted = global.race['wish'] && global.race['wishStats'] && global.race.wishStats.astro ? true : false;
     let multiplier = 1;
     if (global.race['astrologer']){
-        multiplier += global.race['unfavored'] ? -(traits.astrologer.vars()[0] / 100) : traits.astrologer.vars()[0] / 100;
-    }
-    if (global.race['unfavored']){
-        multiplier *= -(traits.unfavored.vars()[0] / 100);
+        multiplier += traits.astrologer.vars()[0] / 100;
     }
     switch (sign){
         case 'aries': // Combat Rating
