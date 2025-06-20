@@ -787,8 +787,8 @@ export function checkAchievements(){
     unlockFeat('thanksgiving',global.race.universe === 'micro' ? true : false);
     unlockFeat('xmas',global.race.universe === 'micro' ? true : false);
     unlockFeat('fool',global.race.universe === 'micro' ? true : false);
-    unlockFeat('fireworks',global.race.universe === 'micro' ? true : false);
-    unlockFeat('solastice',global.race.universe === 'micro' ? true : false);
+    unlockFeat('firework',global.race.universe === 'micro' ? true : false);
+    unlockFeat('solstice',global.race.universe === 'micro' ? true : false);
 
     if (global.stats.dkills >= 666000000){
         unlockFeat('demon_slayer');
