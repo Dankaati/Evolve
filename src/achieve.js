@@ -603,18 +603,6 @@ export function checkAchievements(){
         }
     }
 
-    if (eventActive('summer') && global.resource.hasOwnProperty('Thermite')){
-        let thermite = 100000 + global.stats.reset * 9000;
-        if (thermite > 1000000){ thermite = 1000000; }
-        if (global.resource.Thermite.amount > thermite){
-            unlockFeat('solstice',global.race.universe === 'micro' ? true : false);
-        }
-    }
-
-    if (eventActive('firework') && global[global.race['cataclysm'] || global.race['orbit_decayed'] ? 'space' : 'city'].firework.on > 0){
-        unlockFeat('firework',global.race.universe === 'micro' ? true : false);
-    }
-
     if (global.city.morale.current >= 200){
         unlockAchieve('paradise');
         if (global.city.morale.current >= 500){
@@ -799,6 +787,8 @@ export function checkAchievements(){
     unlockFeat('thanksgiving',global.race.universe === 'micro' ? true : false);
     unlockFeat('xmas',global.race.universe === 'micro' ? true : false);
     unlockFeat('fool',global.race.universe === 'micro' ? true : false);
+    unlockFeat('fireworks',global.race.universe === 'micro' ? true : false);
+    unlockFeat('solastice',global.race.universe === 'micro' ? true : false);
 
     if (global.stats.dkills >= 666000000){
         unlockFeat('demon_slayer');
