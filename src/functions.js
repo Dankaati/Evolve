@@ -1161,10 +1161,8 @@ export function powerModifier(energy){
         energy *= darkEffect('antimatter');
         energy = +energy.toFixed(2);
     }
-    if (astrologySign() === 'leo'){
-        energy *= 1 + (astroVal('leo')[0] / 100);
-        energy = +energy.toFixed(2);
-    }
+	energy *= 1 + (astroVal('leo')[0] / 100);
+	energy = +energy.toFixed(2);
     return energy;
 }
 
