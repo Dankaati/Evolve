@@ -8,6 +8,7 @@ import { syndicate } from './truepath.js';
 import { govActive, defineGovernor } from './governor.js';
 import { govEffect } from './civics.js';
 import { highPopAdjust, production, teamster } from './prod.js';
+import { astroVal } from './seasons.js';
 import { loc } from './locale.js';
 
 export const resource_values = {
