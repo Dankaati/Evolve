@@ -8,6 +8,7 @@ import { syndicate } from './truepath.js';
 import { govActive, defineGovernor } from './governor.js';
 import { govEffect } from './civics.js';
 import { highPopAdjust, production, teamster } from './prod.js';
+import { astrologySign, astroVal } from './seasons.js';
 import { loc } from './locale.js';
 
 export const resource_values = {
@@ -1424,9 +1425,7 @@ export function marketItem(mount,market_item,name,color,full){
                 if (global.race['persuasive']){
                     rate *= 1 + (global.race['persuasive'] / 100);
                 }
-                if (astroSign === 'capricorn'){
-                    rate *= 1 + (astroVal('capricorn')[0] / 100);
-                }
+                rate *= 1 + (astroVal('capricorn')[0] / 100);
                 if (global.race['ocular_power'] && global.race['ocularPowerConfig'] && global.race.ocularPowerConfig.c){
                     let trade = 70 * (traits.ocular_power.vars()[1] / 100);
                     rate *= 1 + (trade / 100);
