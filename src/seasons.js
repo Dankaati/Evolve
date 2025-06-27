@@ -333,46 +333,7 @@ export function astroVal(sign){
 }
 
 export function astrologySign(){
-    const date = new Date();
-    if ((date.getMonth() === 0 && date.getDate() >= 20) || (date.getMonth() === 1 && date.getDate() <= 18)){
-        return 'aquarius';
-    }
-    else if ((date.getMonth() === 1 && date.getDate() >= 19) || (date.getMonth() === 2 && date.getDate() <= 20)){
-        return 'pisces';
-    }
-    else if ((date.getMonth() === 2 && date.getDate() >= 21) || (date.getMonth() === 3 && date.getDate() <= 19)){
-        return 'aries';
-    }
-    else if ((date.getMonth() === 3 && date.getDate() >= 20) || (date.getMonth() === 4 && date.getDate() <= 20)){
-        return 'taurus';
-    }
-    else if ((date.getMonth() === 4 && date.getDate() >= 21) || (date.getMonth() === 5 && date.getDate() <= 21)){
-        return 'gemini';
-    }
-    else if ((date.getMonth() === 5 && date.getDate() >= 22) || (date.getMonth() === 6 && date.getDate() <= 22)){
-        return 'cancer';
-    }
-    else if ((date.getMonth() === 6 && date.getDate() >= 23) || (date.getMonth() === 7 && date.getDate() <= 22)){
-        return 'leo';
-    }
-    else if ((date.getMonth() === 7 && date.getDate() >= 23) || (date.getMonth() === 8 && date.getDate() <= 22)){
-        return 'virgo';
-    }
-    else if ((date.getMonth() === 8 && date.getDate() >= 23) || (date.getMonth() === 9 && date.getDate() <= 22)){
-        return 'libra';
-    }
-    else if ((date.getMonth() === 9 && date.getDate() >= 23) || (date.getMonth() === 10 && date.getDate() <= 22)){
-        return 'scorpio';
-    }
-    else if ((date.getMonth() === 10 && date.getDate() >= 23) || (date.getMonth() === 11 && date.getDate() <= 21)){
-        return 'sagittarius';
-    }
-    else if ((date.getMonth() === 11 && date.getDate() >= 22) || (date.getMonth() === 0 && date.getDate() <= 19)){
-        return 'capricorn';
-    }
-    else {
-        return 'time itself is broken';
-    }
+    return 'gemini';
 }
 
 function astrologyDescription(){
