@@ -455,7 +455,7 @@ export function drawnGovernOffice(){
     { // Crate/Container Construction
         if (!global.race.governor.config.hasOwnProperty('storage')){
             global.race.governor.config['storage'] = {
-                crt: 1000,
+                crt: 100,
                 cnt: 1000
             };
         }
@@ -511,8 +511,8 @@ export function drawnGovernOffice(){
     { // Mercenary Recruitment
         if (!global.race.governor.config.hasOwnProperty('merc')){
             global.race.governor.config['merc'] = {
-                buffer: 1,
-                reserve: 100
+                buffer: 5,
+                reserve: 5
             };
         }
 
@@ -528,7 +528,7 @@ export function drawnGovernOffice(){
     { // Spy Recruitment
         if (!global.race.governor.config.hasOwnProperty('spy')){
             global.race.governor.config['spy'] = {
-                reserve: 100
+                reserve: 5
             };
         }
 
@@ -544,7 +544,7 @@ export function drawnGovernOffice(){
         if (!global.race.governor.config.hasOwnProperty('spyop')){
             global.race.governor.config['spyop'] = {};
             Object.keys(global.civic.foreign).forEach(function (gov){
-                global.race.governor.config.spyop[gov] = gov === 'gov3' ? ['influence','sabotage'] : ['sabotage','incite','influence'];
+                global.race.governor.config.spyop[gov] = gov === 'gov3' ? ['influence','sabotage'] : ['influence','sabotage','incite'];
             });
         }
         
@@ -586,7 +586,7 @@ export function drawnGovernOffice(){
     { // Slave Replenishment
         if (!global.race.governor.config.hasOwnProperty('slave')){
             global.race.governor.config['slave'] = {
-                reserve: 100
+                reserve: 5
             };
         }
 
