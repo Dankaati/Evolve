@@ -880,7 +880,7 @@ export const gov_tasks = {
     storage: { // Crate/Container Construction
         name: loc(`gov_task_storage`),
         req(){
-            return checkCityRequirements('storage_yard') && global.tech['container'] && global.resource.Crates.display ? true : false;
+            return checkCityRequirements('storage_yard') && global.tech['container'] && global.resource.Crates.display ? true : false && global.genes.governor >= 3 ? false : true;
         },
         task(){
             if ( $(this)[0].req() ){
@@ -907,7 +907,7 @@ export const gov_tasks = {
     bal_storage: { // Balanced Storage
         name: loc(`gov_task_bal_storage`),
         req(){
-            return checkCityRequirements('storage_yard') && global.tech['container'] && global.resource.Crates.display ? true : false;
+            return checkCityRequirements('storage_yard') && global.tech['container'] && global.resource.Crates.display ? true : false && global.genes.governor >= 3 ? false : true;
         },
         task(){
             if ( $(this)[0].req() ){
@@ -1177,7 +1177,7 @@ export const gov_tasks = {
             if (global.race['truepath'] && global.tech['spy'] && global.tech.spy >= 2){
                 return true;
             }
-            return global.tech['spy'] && global.tech.spy >= 2 && !global.tech['world_control'] && !global.race['cataclysm'] && global.genes.governor >= 3 ? true : false;
+            return global.tech['spy'] && global.tech.spy >= 1 && !global.tech['world_control'] && !global.race['cataclysm'] && global.genes.governor >= 3 ? true : false;
         },
         task(){
             if ( $(this)[0].req() ){
