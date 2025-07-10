@@ -880,7 +880,7 @@ export const gov_tasks = {
     storage: { // Crate/Container Construction
         name: loc(`gov_task_storage`),
         req(){
-            return checkCityRequirements('storage_yard') && global.tech['container'] && global.resource.Crates.display ? true : false && global.genes.governor >= 3 ? false : true;
+            return checkCityRequirements('storage_yard') && global.tech['container'] && global.resource.Crates.display ? true : false;
         },
         task(){
             if ( $(this)[0].req() ){
@@ -907,7 +907,7 @@ export const gov_tasks = {
     bal_storage: { // Balanced Storage
         name: loc(`gov_task_bal_storage`),
         req(){
-            return checkCityRequirements('storage_yard') && global.tech['container'] && global.resource.Crates.display ? true : false && global.genes.governor >= 3 ? false : true;
+            return checkCityRequirements('storage_yard') && global.tech['container'] && global.resource.Crates.display ? true : false;
         },
         task(){
             if ( $(this)[0].req() ){
