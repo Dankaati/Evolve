@@ -262,7 +262,7 @@ export const craftingRatio = (function(){
             let harmonic = calcPillar();
             modifier *= harmonic[1];
             crafting.general.add.push({
-                name: "Harmonic Energy",
+                name: loc('harmonic'),
                 manual: harmonic[1],
                 auto: harmonic[1]
             });
