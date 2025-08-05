@@ -503,7 +503,7 @@ export const craftingRatio = (function(){
                 auto: plasmidBonus('antiplasmid') + 1
             });
             let harmonic = calcPillar();
-            crafting.general.add.push({
+            crafting.general.multi.push({
                 name: loc('harmonic'),
                 manual: harmonic[1],
                 auto: harmonic[1]
