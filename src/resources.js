@@ -259,6 +259,13 @@ export const craftingRatio = (function(){
                     multi: []
                 }
             };
+            let harmonic = calcPillar();
+            modifier *= harmonic[1];
+            crafting.general.add.push({
+                name: "Harmonic Energy",
+                manual: harmonic[1],
+                auto: harmonic[1]
+            });
             if (global.tech['foundry'] >= 2){
                 let skill = global.tech['foundry'] >= 5 ? (global.tech['foundry'] >= 8 ? 0.08 : 0.05) : 0.03;
                 crafting.general.add.push({
