@@ -504,6 +504,11 @@ export const craftingRatio = (function(){
                     auto: plasmidBonus() / 8 + 1
                 });
             }
+            crafting.general.multi.push({
+                name: loc(`resource_AntiPlasmid_plural_name`),
+                manual: plasmidBonus('antiplasmid') + 1,
+                auto: plasmidBonus('antiplasmid') + 1
+            });
             if (global.genes['challenge'] && global.genes['challenge'] >= 2){
                 crafting.general.multi.push({
                     name: loc(`mastery`),
