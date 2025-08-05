@@ -259,13 +259,6 @@ export const craftingRatio = (function(){
                     multi: []
                 }
             };
-            let harmonic = calcPillar();
-            modifier *= harmonic[1];
-            crafting.general.add.push({
-                name: loc('harmonic'),
-                manual: harmonic[1],
-                auto: harmonic[1]
-            });
             if (global.tech['foundry'] >= 2){
                 let skill = global.tech['foundry'] >= 5 ? (global.tech['foundry'] >= 8 ? 0.08 : 0.05) : 0.03;
                 crafting.general.add.push({
@@ -508,6 +501,12 @@ export const craftingRatio = (function(){
                 name: loc(`resource_AntiPlasmid_plural_name`),
                 manual: plasmidBonus('antiplasmid') + 1,
                 auto: plasmidBonus('antiplasmid') + 1
+            });
+            let harmonic = calcPillar();
+            crafting.general.add.push({
+                name: loc('harmonic'),
+                manual: harmonic[1],
+                auto: harmonic[1]
             });
             if (global.genes['challenge'] && global.genes['challenge'] >= 2){
                 crafting.general.multi.push({
