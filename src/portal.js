@@ -2348,7 +2348,7 @@ const fortressModules = {
                 }
             },
             reqs: { hell_gate: 2 },
-            queue_size: 25,
+            queue_size: 50,
             queue_complete(){ return towerSize() - global.portal.west_tower.count; },
             cost: {
                 Money(offset,wiki){ return ((offset || 0) + (global.portal.hasOwnProperty('west_tower') ? global.portal.west_tower.count : 0)) < towerSize() ? towerPrice(10000000,wiki) : 0; },
@@ -2409,7 +2409,7 @@ const fortressModules = {
                 }
             },
             reqs: { hell_gate: 2 },
-            queue_size: 25,
+            queue_size: 50,
             queue_complete(){ return towerSize() - global.portal.east_tower.count; },
             cost: {
                 Money(offset,wiki){ return ((offset || 0) + (global.portal.hasOwnProperty('east_tower') ? global.portal.east_tower.count : 0)) < towerSize() ? towerPrice(10000000,wiki) : 0; },
@@ -3639,7 +3639,7 @@ export const towerSize = (function(){
         if (global.hasOwnProperty('pillars')){
             Object.keys(global.pillars).forEach(function(pillar){
                 if (global.pillars[pillar]){
-                    size -= global.pillars[pillar] * 2 + 2;
+                    size -= global.pillars[pillar] * 2 + 6;
                 }
             });            
         }
