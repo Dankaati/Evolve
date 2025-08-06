@@ -3643,7 +3643,7 @@ export const towerSize = (function(){
                 }
             });            
         }
-        if (size < 250){ size = 250; }
+        if (size < 100){ size = 100; }
         return size;
     }
 })();
