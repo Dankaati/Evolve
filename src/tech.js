@@ -14891,7 +14891,7 @@ const techs = {
             Knowledge(){ return 105000000; },
             Omniscience(){ return 25000; },
             Steel(){ return 1000000000; },
-            Nano_Tube(){ return 500000000; },
+            Nano_Tube(){ return 400000000; },
             Asphodel_Powder(){ return 250000; },
             Elysanite(){ return 100000000; },
             Soul_Gem(){ return 5000; },
