@@ -1705,9 +1705,9 @@ const edenicModules = {
                     return global.eden?.reincarnation?.count === 0 ? 35000000000
                         : (global.eden?.reincarnation?.count === 1 ? 5000000000 : 0);
                 },
-                Aluminium(o){ return global.eden?.reincarnation?.count === 0 ? 10000000000 : 0; },
-                Nano_Tube(o){ return global.eden?.reincarnation?.count === 0 ? 2000000000 : 0; },
-                Asphodel_Powder(o){ return global.eden?.reincarnation?.count === 0 ? 750000 : 0; },
+                Aluminium(o){ return global.eden?.reincarnation?.count === 0 ? 7500000000 : 0; },
+                Nano_Tube(o){ return global.eden?.reincarnation?.count === 0 ? 500000000 : 0; },
+                Asphodel_Powder(o){ return global.eden?.reincarnation?.count === 0 ? 420000 : 0; },
             },
             queue_complete(){ return 1 - (global.eden?.reincarnation?.count || 0); },
             effect(){
@@ -1913,9 +1913,9 @@ const edenicModules = {
             reqs: { isle: 4 },
             cost: {
                 Money(offset){ return spaceCostMultiplier('spirit_vacuum', offset, 30000000000, 1.1, 'eden'); },
-                Neutronium(offset){ return spaceCostMultiplier('spirit_vacuum', offset, 175000000, 1.1, 'eden'); },
+                Neutronium(offset){ return spaceCostMultiplier('spirit_vacuum', offset, 100000000, 1.1, 'eden'); },
                 Stanene(offset){ return spaceCostMultiplier('spirit_vacuum', offset, 1000000000, 1.1, 'eden'); },
-                Elerium(offset){ return spaceCostMultiplier('spirit_vacuum', offset, 240000, 1.1, 'eden'); },
+                Elerium(offset){ return spaceCostMultiplier('spirit_vacuum', offset, 130000, 1.1, 'eden'); },
                 Soul_Gem(offset){ return spaceCostMultiplier('spirit_vacuum', offset, 1000, 1.1, 'eden'); },
             },
             effect(){
