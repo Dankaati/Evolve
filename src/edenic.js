@@ -1208,7 +1208,7 @@ const edenicModules = {
                     return !global.eden.hasOwnProperty('fire_support_base') || (global.eden.fire_support_base.count < 100) ? 625000 : 0;
                 },
                 Elerium(){
-                    return global.tech.elysium >= 10 && global.eden.fire_support_base.count === 100 && global.tech['isle'] && global.tech.isle === 1 ? 150000 : 0;
+                    return global.tech.elysium >= 10 && global.eden.fire_support_base.count === 100 && global.tech['isle'] && global.tech.isle === 1 ? 130000 : 0;
                 }
             },
             effect(wiki){
@@ -1216,13 +1216,13 @@ const edenicModules = {
                 if (count >= 100){
                     let desc = `<div>${loc('plus_max_soldiers',[$(this)[0].soldiers()])}</div>`;
                     if (global.tech['elysium'] && global.tech.elysium >= 10 && global.tech.isle === 1){
-                        if (global.resource.Elerium.amount >= 150000){
+                        if (global.resource.Elerium.amount >= 130000){
                             desc += `<div class="has-text-success">${loc('eden_fire_support_base_effect')}</div>`;
                         }
                         else {
                             desc += `<div class="has-text-danger">${loc('eden_fire_support_base_effect')}</div>`;
                         }
-                        desc += `<div class="has-text-caution">${loc('eden_fire_support_base_effect2',[sizeApproximation(150000),global.resource.Elerium.name])}</div>`;
+                        desc += `<div class="has-text-caution">${loc('eden_fire_support_base_effect2',[sizeApproximation(130000),global.resource.Elerium.name])}</div>`;
                     }
                     return desc;
                 }
