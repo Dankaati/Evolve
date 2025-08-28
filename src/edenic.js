@@ -1706,7 +1706,7 @@ const edenicModules = {
                         : (global.eden?.reincarnation?.count === 1 ? 5000000000 : 0);
                 },
                 Aluminium(o){ return global.eden?.reincarnation?.count === 0 ? 10000000000 : 0; },
-                Nano_Tube(o){ return global.eden?.reincarnation?.count === 0 ? 1400000000 : 0; },
+                Nano_Tube(o){ return global.eden?.reincarnation?.count === 0 ? 2000000000 : 0; },
                 Asphodel_Powder(o){ return global.eden?.reincarnation?.count === 0 ? 750000 : 0; },
             },
             queue_complete(){ return 1 - (global.eden?.reincarnation?.count || 0); },
