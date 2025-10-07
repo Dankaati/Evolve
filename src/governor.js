@@ -639,7 +639,7 @@ export function drawnGovernOffice(){
             global.race.governor.config['replicate'] = {};
         }
         if (!global.race.governor.config.replicate.hasOwnProperty('pow')){
-            global.race.governor.config.replicate['pow'] = { on: false, cap: 10000, buffer: 0 };
+            global.race.governor.config.replicate['pow'] = { on: true, cap: 100000, buffer: 0 };
         }
         if (!global.race.governor.config.replicate.hasOwnProperty('res')){
             global.race.governor.config.replicate['res'] = { que: true, neg: true, cap: true };
