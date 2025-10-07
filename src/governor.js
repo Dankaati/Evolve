@@ -898,23 +898,21 @@ export const gov_tasks = {
             return checkCityRequirements('storage_yard') && global.tech['container'] && global.resource.Crates.display && global.genes.governor < 3 ? true : false;
         },
         task(){
-            if ( $(this)[0].req() ){
-                if (global.resource.Crates.amount < global.resource.Crates.max){
-                    let mat = global.race['kindling_kindred'] || global.race['smoldering'] ? (global.race['smoldering'] ? 'Chrysotile' : 'Stone') : 'Plywood';
-                    let cost = global.race['kindling_kindred'] || global.race['smoldering'] ? 200 : 10;
-                    let reserve = global.race.governor.config.storage.crt;
-                    if (global.resource[mat].amount > reserve + cost){
-                        let build = Math.floor((global.resource[mat].amount - reserve) / cost);
-                        crateGovHook('crate',build);
-                    }
+            if (global.resource.Crates.amount < global.resource.Crates.max){
+                let mat = global.race['kindling_kindred'] || global.race['smoldering'] ? (global.race['smoldering'] ? 'Chrysotile' : 'Stone') : 'Plywood';
+                let cost = global.race['kindling_kindred'] || global.race['smoldering'] ? 200 : 10;
+                let reserve = global.race.governor.config.storage.crt;
+                if (global.resource[mat].amount > reserve + cost){
+                    let build = Math.floor((global.resource[mat].amount - reserve) / cost);
+                    crateGovHook('crate',build);
                 }
-                if (checkCityRequirements('warehouse') && global.resource.Containers.display && global.resource.Containers.amount < global.resource.Containers.max){
-                    let cost = 125;
-                    let reserve = global.race.governor.config.storage.cnt;
-                    if (global.resource.Steel.amount > reserve + cost){
-                        let build = Math.floor((global.resource.Steel.amount - reserve) / cost);
-                        crateGovHook('container',build);
-                    }
+            }
+            if (checkCityRequirements('warehouse') && global.resource.Containers.display && global.resource.Containers.amount < global.resource.Containers.max){
+                let cost = 125;
+                let reserve = global.race.governor.config.storage.cnt;
+                if (global.resource.Steel.amount > reserve + cost){
+                    let build = Math.floor((global.resource.Steel.amount - reserve) / cost);
+                    crateGovHook('container',build);
                 }
             }
         }
@@ -925,80 +923,112 @@ export const gov_tasks = {
             return checkCityRequirements('storage_yard') && global.tech['container'] && global.resource.Crates.display && global.genes.governor < 3 ? true : false;
         },
         task(){
-            if ( $(this)[0].req() ){
-                let crates = global.resource.Crates.amount;
-                let sCrate = crates;
-                let containers = global.resource.Containers.amount;
-                let sCon = containers;
-                let active = 0;
+            let crates = global.resource.Crates.amount;
+            let sCrate = crates;
+            let containers = global.resource.Containers.amount;
+            let sCon = containers;
+            let active = 0;
 
-                let res_list = Object.keys(global.resource).slice().reverse();
+            let res_list = Object.keys(global.resource).slice().reverse();
 
-                res_list.forEach(function(res){
-                    if (global.resource[res].display && global.resource[res].stackable){
-                        crates += global.resource[res].crates;
-                        containers += global.resource[res].containers;
-                        active++;
+            res_list.forEach(function(res){
+                if (global.resource[res].display && global.resource[res].stackable){
+                    crates += global.resource[res].crates;
+                    containers += global.resource[res].containers;
+                    active++;
+                }
+                else {
+                    global.resource[res].crates = 0;
+                    global.resource[res].containers = 0;
+                }
+            });
+
+            let crateSet = Math.floor(crates / active);
+            let containerSet = Math.floor(containers / active);
+
+            let dist = {
+                Food: { m: 0.1, cap: 100 },
+                Coal: { m: 0.25 },
+            };
+
+            if (global.race['artifical']){
+                delete dist.Food;
+            }
+
+            Object.keys(global.race.governor.config.bal_storage).forEach(function(res){
+                let val = Number(global.race.governor.config.bal_storage[res]);
+                if (res === 'Coal'){
+                    dist[res] = { m: 0.125 * val };
+                }
+                else if (res === 'Food'){
+                    dist[res] = { m: 0.05 * val, cap: 50 * val };
+                }
+                else if (global.resource[res]){
+                    dist[res] = { m: val };
+                }
+            });
+
+            Object.keys(dist).forEach(function(r){
+                if (global.resource[r].display){
+                    if (dist[r].hasOwnProperty('cap')){
+                        active--;
+                        {
+                            let set = Math.floor(crateSet * dist[r].m);
+                            if (dist[r].hasOwnProperty('cap') && set > dist[r].cap){ set = dist[r].cap; }
+                            global.resource[r].crates = set;
+                            crates -= set;
+                        }
+                        if (global.resource.Containers.display){
+                            let set = Math.floor(containerSet * dist[r].m);
+                            if (dist[r].hasOwnProperty('cap') && set > dist[r].cap){ set = dist[r].cap; }
+                            global.resource[r].containers = set;
+                            containers -= set;
+                        }
                     }
                     else {
-                        global.resource[res].crates = 0;
-                        global.resource[res].containers = 0;
+                        active += dist[r].m - 1;
                     }
-                });
-
-                let crateSet = Math.floor(crates / active);
-                let containerSet = Math.floor(containers / active);
-
-                let dist = {
-                    Food: { m: 0.1, cap: 100 },
-                    Coal: { m: 0.25 },
-                };
-
-                if (global.race['artifical']){
-                    delete dist.Food;
                 }
+            });
+            
+            crateSet = active !== 0 ? Math.floor(crates / active) : 0;
+            containerSet = active !== 0 ? Math.floor(containers / active): 0;
+            crates -= Math.floor(crateSet * active);
+            containers -= Math.floor(containerSet * active);
 
-                Object.keys(global.race.governor.config.bal_storage).forEach(function(res){
-                    let val = Number(global.race.governor.config.bal_storage[res]);
-                    if (res === 'Coal'){
-                        dist[res] = { m: 0.125 * val };
+            res_list.forEach(function(res){
+                if (dist[res] && dist[res].hasOwnProperty('cap')){
+                    return;
+                }
+                if (global.race['artifical'] && res === 'Food'){
+                    return;
+                }
+                if (global.resource[res].display && global.resource[res].stackable){
+                    let multiplier = dist[res] ? dist[res].m : 1;
+                    let crtAssign = Math.floor(crateSet > 0 ? crateSet * multiplier : 0);
+                    global.resource[res].crates = crtAssign;
+                    if (global.resource.Containers.display){
+                        let cntAssign = Math.floor(containerSet > 0 ? containerSet * multiplier : 0);
+                        global.resource[res].containers = cntAssign;
                     }
-                    else if (res === 'Food'){
-                        dist[res] = { m: 0.05 * val, cap: 50 * val };
+                    if (crates > 0 && multiplier >= 1){
+                        let adjust = Math.ceil(multiplier / 2);
+                        if (crates < adjust){ adjust = crates; }
+                        global.resource[res].crates += adjust;
+                        crates -= adjust;
                     }
-                    else if (global.resource[res]){
-                        dist[res] = { m: val };
+                    if (containers > 0 && multiplier >= 1){
+                        let adjust = Math.ceil(multiplier / 2);
+                        if (containers < adjust){ adjust = containers; }
+                        global.resource[res].containers += adjust;
+                        containers -= adjust;
                     }
-                });
+                }
+            });
 
-                Object.keys(dist).forEach(function(r){
-                    if (global.resource[r].display){
-                        if (dist[r].hasOwnProperty('cap')){
-                            active--;
-                            {
-                                let set = Math.floor(crateSet * dist[r].m);
-                                if (dist[r].hasOwnProperty('cap') && set > dist[r].cap){ set = dist[r].cap; }
-                                global.resource[r].crates = set;
-                                crates -= set;
-                            }
-                            if (global.resource.Containers.display){
-                                let set = Math.floor(containerSet * dist[r].m);
-                                if (dist[r].hasOwnProperty('cap') && set > dist[r].cap){ set = dist[r].cap; }
-                                global.resource[r].containers = set;
-                                containers -= set;
-                            }
-                        }
-                        else {
-                            active += dist[r].m - 1;
-                        }
-                    }
-                });
-                
-                crateSet = active !== 0 ? Math.floor(crates / active) : 0;
-                containerSet = active !== 0 ? Math.floor(containers / active): 0;
-                crates -= Math.floor(crateSet * active);
-                containers -= Math.floor(containerSet * active);
-
+            let max = 3;
+            while (max > 0 && (crates > 0 || containers > 0)){
+                max--;
                 res_list.forEach(function(res){
                     if (dist[res] && dist[res].hasOwnProperty('cap')){
                         return;
@@ -1007,57 +1037,23 @@ export const gov_tasks = {
                         return;
                     }
                     if (global.resource[res].display && global.resource[res].stackable){
-                        let multiplier = dist[res] ? dist[res].m : 1;
-                        let crtAssign = Math.floor(crateSet > 0 ? crateSet * multiplier : 0);
-                        global.resource[res].crates = crtAssign;
-                        if (global.resource.Containers.display){
-                            let cntAssign = Math.floor(containerSet > 0 ? containerSet * multiplier : 0);
-                            global.resource[res].containers = cntAssign;
+                        if (crates > 0){
+                            global.resource[res].crates++;
+                            crates--;
                         }
-                        if (crates > 0 && multiplier >= 1){
-                            let adjust = Math.ceil(multiplier / 2);
-                            if (crates < adjust){ adjust = crates; }
-                            global.resource[res].crates += adjust;
-                            crates -= adjust;
-                        }
-                        if (containers > 0 && multiplier >= 1){
-                            let adjust = Math.ceil(multiplier / 2);
-                            if (containers < adjust){ adjust = containers; }
-                            global.resource[res].containers += adjust;
-                            containers -= adjust;
+                        if (containers > 0){
+                            global.resource[res].containers++;
+                            containers--;
                         }
                     }
                 });
+            }
 
-                let max = 3;
-                while (max > 0 && (crates > 0 || containers > 0)){
-                    max--;
-                    res_list.forEach(function(res){
-                        if (dist[res] && dist[res].hasOwnProperty('cap')){
-                            return;
-                        }
-                        if (global.race['artifical'] && res === 'Food'){
-                            return;
-                        }
-                        if (global.resource[res].display && global.resource[res].stackable){
-                            if (crates > 0){
-                                global.resource[res].crates++;
-                                crates--;
-                            }
-                            if (containers > 0){
-                                global.resource[res].containers++;
-                                containers--;
-                            }
-                        }
-                    });
-                }
-
-                global.resource.Crates.amount = crates;
-                global.resource.Containers.amount = containers;
-                if (active){
-                    global.resource.Crates.max -= sCrate;
-                    global.resource.Containers.max -= sCon;
-                }
+            global.resource.Crates.amount = crates;
+            global.resource.Containers.amount = containers;
+            if (active){
+                global.resource.Crates.max -= sCrate;
+                global.resource.Containers.max -= sCon;
             }
         }
     },
@@ -1128,15 +1124,13 @@ export const gov_tasks = {
             return global.tech['spy'] && !global.tech['world_control'] && !global.race['cataclysm'] ? true : false;
         },
         task(){
-            if ( $(this)[0].req() ){
-                let cashCap = global.resource.Money.max * (global.race.governor.config.spy.reserve / 100);
-                let max = global.race['truepath'] && global.tech['rival'] ? 4 : 3;
-                let min = global.tech['world_control'] ? 3 : 0;
-                for (let i=min; i<max; i++){
-                    let cost = govCivics('s_cost',i);
-                    if (!global.civic.foreign[`gov${i}`].anx && !global.civic.foreign[`gov${i}`].buy && !global.civic.foreign[`gov${i}`].occ && global.civic.foreign[`gov${i}`].trn === 0 && global.resource.Money.amount >= cost && (global.resource.Money.diff >= cost || global.resource.Money.amount + global.resource.Money.diff >= cashCap)){
-                        govCivics('t_spy',i);
-                    }
+            let cashCap = global.resource.Money.max * (global.race.governor.config.spy.reserve / 100);
+            let max = global.race['truepath'] && global.tech['rival'] ? 4 : 3;
+            let min = global.tech['world_control'] ? 3 : 0;
+            for (let i=min; i<max; i++){
+                let cost = govCivics('s_cost',i);
+                if (!global.civic.foreign[`gov${i}`].anx && !global.civic.foreign[`gov${i}`].buy && !global.civic.foreign[`gov${i}`].occ && global.civic.foreign[`gov${i}`].trn === 0 && global.resource.Money.amount >= cost && (global.resource.Money.diff >= cost || global.resource.Money.amount + global.resource.Money.diff >= cashCap)){
+                    govCivics('t_spy',i);
                 }
             }
         }
@@ -1156,37 +1150,35 @@ export const gov_tasks = {
             return global.tech['spy'] && global.tech.spy >= 1 && !global.tech['world_control'] && !global.race['cataclysm'] ? true : false;
         },
         task(){
-            if ( $(this)[0].req() ){
-                let range = global.race['truepath'] && global.tech['rival'] ? [0,1,2,3] : [0,1,2];
-                if (global.tech['world_control']){ range = [3]; }
-                range.forEach(function(gov){
-                    if (global.civic.foreign[`gov${gov}`].sab === 0 && global.civic.foreign[`gov${gov}`].spy > 0 && !global.civic.foreign[`gov${gov}`].anx && !global.civic.foreign[`gov${gov}`].buy && !global.civic.foreign[`gov${gov}`].occ){
-                        global.race.governor.config.spyop[`gov${gov}`].every(function (mission){
-                            switch (mission){
-                                case 'influence':
-                                    if (global.civic.foreign[`gov${gov}`].hstl > 0 && global.civic.foreign[`gov${gov}`].spy > 1){
-                                        govCivics('s_influence',gov);
-                                        return false;
-                                    }
-                                    break;
-                                case 'sabotage':
-                                    if (global.civic.foreign[`gov${gov}`].mil > 50){
-                                        govCivics('s_sabotage',gov);
-                                        return false;
-                                    }
-                                    break;
-                                case 'incite':
-                                    if (global.civic.foreign[`gov${gov}`].unrest < 100 && global.civic.foreign[`gov${gov}`].spy > 2 && gov < 3){
-                                        govCivics('s_incite',gov);
-                                        return false;
-                                    }
-                                    break;
-                            }
-                            return true;
-                        });
-                    }
-                });
-            }
+            let range = global.race['truepath'] && global.tech['rival'] ? [0,1,2,3] : [0,1,2];
+            if (global.tech['world_control']){ range = [3]; }
+            range.forEach(function(gov){
+                if (global.civic.foreign[`gov${gov}`].sab === 0 && global.civic.foreign[`gov${gov}`].spy > 0 && !global.civic.foreign[`gov${gov}`].anx && !global.civic.foreign[`gov${gov}`].buy && !global.civic.foreign[`gov${gov}`].occ){
+                    global.race.governor.config.spyop[`gov${gov}`].every(function (mission){
+                        switch (mission){
+                            case 'influence':
+                                if (global.civic.foreign[`gov${gov}`].hstl > 0 && global.civic.foreign[`gov${gov}`].spy > 1){
+                                    govCivics('s_influence',gov);
+                                    return false;
+                                }
+                                break;
+                            case 'sabotage':
+                                if (global.civic.foreign[`gov${gov}`].mil > 50){
+                                    govCivics('s_sabotage',gov);
+                                    return false;
+                                }
+                                break;
+                            case 'incite':
+                                if (global.civic.foreign[`gov${gov}`].unrest < 100 && global.civic.foreign[`gov${gov}`].spy > 2 && gov < 3){
+                                    govCivics('s_incite',gov);
+                                    return false;
+                                }
+                                break;
+                        }
+                        return true;
+                    });
+                }
+            });
         }
     },
     combo_spy: {
