@@ -895,7 +895,7 @@ export const gov_tasks = {
     storage: { // Crate/Container Construction
         name: loc(`gov_task_storage`),
         req(){
-            return checkCityRequirements('storage_yard') && global.tech['container'] && global.resource.Crates.display ? true : false;
+            return checkCityRequirements('storage_yard') && global.tech['container'] && global.resource.Crates.display && global.genes.governor < 3 ? true : false;
         },
         task(){
             if ( $(this)[0].req() ){
@@ -922,7 +922,7 @@ export const gov_tasks = {
     bal_storage: { // Balanced Storage
         name: loc(`gov_task_bal_storage`),
         req(){
-            return checkCityRequirements('storage_yard') && global.tech['container'] && global.resource.Crates.display ? true : false;
+            return checkCityRequirements('storage_yard') && global.tech['container'] && global.resource.Crates.display && global.genes.governor < 3 ? true : false;
         },
         task(){
             if ( $(this)[0].req() ){
@@ -1116,6 +1116,9 @@ export const gov_tasks = {
     spy: { // Spy Recruiter
         name: loc(`gov_task_spy`),
         req(){
+            if (global.genes.governor >= 3) {
+                return false;
+            }
             if (global.tech['isolation']){
                 return false;
             }
@@ -1141,6 +1144,9 @@ export const gov_tasks = {
     spyop: { // Spy Operator
         name: loc(`gov_task_spyop`),
         req(){
+            if (global.genes.governor >= 3) {
+                return false;
+            }
             if (global.tech['isolation']){
                 return false;
             }
@@ -1186,7 +1192,16 @@ export const gov_tasks = {
     combo_spy: {
         name: loc(`gov_task_combo_spy`),
         req(){
-            return (global.genes.governor >= 3) && gov_tasks.spyop.req();
+            if (global.genes.governor < 3) {
+                return false;
+            }
+            if (global.tech['isolation']){
+                return false;
+            }
+            if (global.race['truepath'] && global.tech['spy'] && global.tech.spy >= 2){
+                return true;
+            }
+            return global.tech['spy'] && global.tech.spy >= 1 && !global.tech['world_control'] && !global.race['cataclysm'] ? true : false;
         },
         task(){
             if ( $(this)[0].req() ){
