@@ -4856,25 +4856,10 @@ const techs = {
         effect(){ return global.race.universe === 'antimatter' && !global.race['amexplode'] ? loc('tech_antireplicator_effect_alt') : loc('tech_replicator_effect_alt'); },
         action(){
             if (payCosts($(this)[0])){
-                if (global.race.universe === 'antimatter' && global.race['amexplode']){
+                if (global.race.universe === 'antimatter'){
                     unlockFeat('annihilation');
-                    save.setItem('evolved',LZString.compressToUTF16(JSON.stringify(global)));
-                    $('body').addClass('nuke');
-                    let nuke = $('<div class="nuke"></div>');
-                    $('body').append(nuke);
-                    setTimeout(function(){
-                        nuke.addClass('burn');
-                    }, 500);
-                    setTimeout(function(){
-                        nuke.addClass('b');
-                    }, 600);
-                    setTimeout(function(){
-                        window.soft_reset();
-                    }, 4000);
                 }
-                else {
-                    global.race['replicator'] = { res: 'Stone', pow: 1 };
-                }
+                global.race['replicator'] = { res: 'Stone', pow: 1 };
                 return true;
             }
             return false;
