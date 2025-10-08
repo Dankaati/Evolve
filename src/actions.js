@@ -8543,9 +8543,6 @@ function sentience(){
             global.race['evil'] = 1;
         }
     }
-    else if (global.race.universe === 'antimatter' && (!global.stats.feat['annihilation'] || global.stats.feat['annihilation'] < alevel())){
-        global.race['amexplode'] = 1;
-    }
 
     if (global.race['unified']){
         global.tech['world_control'] = 1;
