@@ -362,7 +362,7 @@ function genGovernor(setSize){
 
 export function govern(){
     if (global.genes['governor'] && global.tech['governor'] && global.race['governor'] && global.race.governor['g'] && global.race.governor['tasks']){
-        let cnt = [0,1,2];
+        let cnt = [0,1,2,3];
         if (global.genes.governor >= 2){
             cnt.push(cnt.length);
             if (govActive('organizer',0)){ cnt.push(cnt.length); }
