@@ -9049,9 +9049,9 @@ export function warlordSetup(){
         global.portal.observe = {
             settings: {
                 expanded: false,
-                average: false,
-                hyperSlow: false,
-                display: 'game_days',
+                average: true,
+                hyperSlow: true,
+                display: 'hours',
                 dropKills: true,
                 dropGems: true
             },
