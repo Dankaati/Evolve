@@ -619,7 +619,7 @@ export function drawnGovernOffice(){
             }
         });
         if (!global.race.governor.config.trash.hasOwnProperty('stab')){
-            global.race.governor.config.trash['stab'] = false;
+            global.race.governor.config.trash['stab'] = true;
         }
 
         let advanced = global.genes.hasOwnProperty('governor') && global.genes.governor >= 3 ? `<div class="chk"><b-checkbox v-model="c.trash.stab">${loc(`gov_task_auto_stabilize`)}</b-checkbox></div>` : ``;
