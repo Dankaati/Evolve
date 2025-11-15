@@ -615,7 +615,7 @@ export function drawnGovernOffice(){
         }
         ['Infernite','Elerium','Copper','Iron'].forEach(function(res){
             if (!global.race.governor.config.trash.hasOwnProperty(res) || typeof global.race.governor.config.trash[res] !== 'object' || global.race.governor.config.trash[res] === null){
-                global.race.governor.config.trash[res] = { v: 0, s: true };
+                global.race.governor.config.trash[res] = { v: res === 'Copper' ? 100000 : 0, s: true };
             }
         });
         if (!global.race.governor.config.trash.hasOwnProperty('stab')){
@@ -639,7 +639,7 @@ export function drawnGovernOffice(){
             global.race.governor.config['replicate'] = {};
         }
         if (!global.race.governor.config.replicate.hasOwnProperty('pow')){
-            global.race.governor.config.replicate['pow'] = { on: true, cap: 100000, buffer: 0 };
+            global.race.governor.config.replicate['pow'] = { on: true, cap: 100000, buffer: 10 };
         }
         if (!global.race.governor.config.replicate.hasOwnProperty('res')){
             global.race.governor.config.replicate['res'] = { que: true, neg: true, cap: true };
